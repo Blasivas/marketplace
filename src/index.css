@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Orange */
+  --color-orange-base: #F24D0D;
+  --color-orange-dark: #C43C08;
+  /* Blue */
+  --color-blue-light: #D7EFF9;
+  --color-blue-base: #5EC5FD;
+  --color-blue-dark: #009CF0;
+  /* Shape */
+  --color-background: #FBF4F4;
+  --color-shape: #F5EAEA;
+  /* Grayscale */
+  --color-gray-100: #ADADAD;
+  --color-gray-200: #949494;
+  --color-gray-300: #666666;
+  --color-gray-400: #3D3D3D;
+  --color-gray-500: #1D1D1D;
+  /* Semantic */
+  --color-danger: #DC3545;
+  --color-success: #28A745;
+}
+
+@layer components {
+  .title-lg {
+    font-size: 1.75rem;
+    line-height: 120%;
+    font-weight: 700;
+    font-family: "DM Sans", sans-serif;
+  }
+  .title-md {
+    font-size: 1.5rem;
+    line-height: 120%;
+    font-weight: 700;
+    font-family: "DM Sans", sans-serif;
+  }
+  .title-sm {
+    font-size: 1.125rem;
+    line-height: 120%;
+    font-weight: 700;
+    font-family: "DM Sans", sans-serif;
+  }
+  .subtitle {
+    font-size: 1rem;
+    line-height: 120%;
+    font-weight: 600;
+    font-family: Poppins, sans-serif;
+  }
+  .body-md {
+    font-size: 1rem;
+    line-height: 120%;
+    font-weight: 400;
+    font-family: Poppins, sans-serif;
+  }
+  .body-sm {
+    font-size: .875rem;
+    line-height: 120%;
+    font-weight: 400;
+    font-family: Poppins, sans-serif;
+  }
+  .body-xs {
+    font-size: .75rem;
+    line-height: 120%;
+    font-weight: 400;
+    font-family: Poppins, sans-serif;
+  }
+  .label-md {
+    font-size: .75rem;
+    line-height: 120%;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-family: Poppins, sans-serif;
+  }
+  .label-sm {
+    font-size: .625rem;
+    line-height: 120%;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-family: Poppins, sans-serif;
+  }
+  .action-md {
+    font-size: 1rem;
+    line-height: 120%;
+    font-weight: 500;
+    font-family: Poppins, sans-serif;
+  }
+  .action-sm {
+    font-size: .875rem;
+    line-height: 120%;
+    font-weight: 500;
+    font-family: Poppins, sans-serif;
+  }
+}
+
