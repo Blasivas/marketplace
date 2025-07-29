@@ -1,19 +1,23 @@
-import { createBrowserRouter} from 'react-router'
-import { Dashboard } from './pages/app/dashboard'
-import { SignIn } from './pages/auth/sign-in'
-import { AppLayout } from './pages/_layouts/app'
-import { AuthLayout } from './pages/_layouts/auth'
-import { SignUp } from './pages/auth/sign-up'
+import { createBrowserRouter, Navigate } from 'react-router'
+import { Dashboard } from './pages/app/Dashboard'
+import { Produtos } from './pages/app/Produtos'
+import { Login } from './pages/auth/Login'
+import { AppLayout } from './pages/_layouts/App'
+import { AuthLayout } from './pages/_layouts/Auth'
+import { Cadastro } from './pages/auth/Cadastro'
+import { NovoProduto } from './pages/app/NovoProduto'
+import { NotFound } from './pages/NotFound'
+import { EditarProduto } from './pages/app/EditarProduto'
 
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <AppLayout />,
+    errorElement: <NotFound />,
     children:[
       {
-        path: '/',
-        element: <Dashboard />
+        index: true,
+        element: <Navigate to="/sign-in" replace />
       }
     ]
   },
@@ -23,7 +27,7 @@ export const router = createBrowserRouter([
     children:[
       {
         path: '/sign-in',
-        element: <SignIn />
+        element: <Login />
       }
     ]
   },
@@ -33,9 +37,33 @@ export const router = createBrowserRouter([
     children:[
       {
         path: '/sign-up',
-        element: <SignUp />
+        element: <Cadastro />
       }
     ]
   },
+
+  {
+    path: '/app',
+    element: <AppLayout />,
+    children:[
+      {
+        path: '/app/dashboard',
+        element: <Dashboard />
+      },
+      {
+        path: '/app/produtos',
+        element: <Produtos />
+      },
+      {
+        path: '/app/novo-produto',
+        element: <NovoProduto />
+      },
+      {
+        path: '/app/editar-produto',
+        element: <EditarProduto />
+      },
+    ]
+  },
+  
 ])
 

@@ -93,6 +93,11 @@
   }
 }
 
-html{
+html, body {
   background-color: var(--color-background);
+  overflow-y: hidden;
+  max-height: 100vh;
+  div {
+    scrollbar-color: transparent transparent;
+  }
 }
