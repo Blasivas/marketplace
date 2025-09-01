@@ -2,15 +2,19 @@ import { ArrowDown01Icon, ImageUploadIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ButtonApp } from "../../components/ButtonApp";
 import { Link, useNavigate } from "react-router";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import z from "zod";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createProduct } from "../../api/CreateProduct";
+import { useMutation } from "@tanstack/react-query"
+
+const ACCEPTED_IMAGE_TYPES = ['image/png', 'image/jpeg']
 
 const NovoProdutoForm = z.object({
-  title: z.string().nonempty(),
-  value: z.number(),
-  description: z.string(),
+  title: z.string().nonempty("Título obrigatório"),
+  value: z.number().min(0, "O valor deve ser maior que zero"),
+  description: z.string().nonempty('Descrição obrigatória'),
   category: z.enum([
     'toy',
     'furniture',
@@ -19,17 +23,41 @@ const NovoProdutoForm = z.object({
     'utensil',
     'clothing'
   ]),
+  file: z
+  .custom<FileList>()
+  .refine((files) => {
+    return Array.from(files ?? []).length !== 0;
+  }, "A imagem do produto é obrigatória")
+  .refine((files) => {
+    return Array.from(files ?? []).every((file) =>
+      ACCEPTED_IMAGE_TYPES.includes(file.type)
+    );
+  }, "Tipo de arquivo precisa ser uma imagem PNG ou JPEG."),
 })
 
 type NovoProdutoForm = z.infer<typeof NovoProdutoForm>
 
+
 export function NovoProduto() {
   const navigate = useNavigate()
 
-  const { handleSubmit, register, formState } = useForm<NovoProdutoForm>({resolver: zodResolver(NovoProdutoForm)})
+  const { handleSubmit, register, formState: { errors} } = useForm<NovoProdutoForm>({resolver: zodResolver(NovoProdutoForm)})
 
-  function handleNovoProduto(data: NovoProdutoForm){
+  const { mutateAsync: create } = useMutation({
+    mutationFn: createProduct,
+  })
+
+  async function handleNovoProduto(data: NovoProdutoForm){
     try {
+      await create({
+        title: data.title,
+        categoryId: data.category,
+        description: data.description,
+        priceInCents: data.value,
+        attachmentsIds: [
+          data.file[0].name
+        ]
+      })
       console.log(data)
       navigate('/app/produtos')
       toast.success('Produto cadastrado com sucesso!')
@@ -47,12 +75,18 @@ export function NovoProduto() {
 
       <div className="flex gap-6">
 
-        <label htmlFor="upload" 
-        className="flex flex-col h-[340px] w-[415px] bg-shape rounded-[20px] hover:cursor-pointer justify-center items-center gap-4">
-          <HugeiconsIcon icon={ImageUploadIcon} size={40} className="text-orange-base"/>
-          <span className="text-center body-sm text-gray-300">Selecione a imagem<br/> do produto</span>
-        </label>
-        <input id="upload" type="file" className="hidden"/>
+
+        <div className="flex flex-col">
+          <label htmlFor="upload" 
+          className="flex flex-col h-[340px] w-[415px] bg-shape rounded-[20px] hover:cursor-pointer justify-center items-center gap-4">
+            <HugeiconsIcon icon={ImageUploadIcon} size={40} className="text-orange-base"/>
+            <span className="text-center body-sm text-gray-300">Selecione a imagem<br/> do produto</span>
+          </label>
+          <input id="upload" type="file" className="hidden" {...register('file')}/>
+            {errors.file?.message && (
+              <span className="text-danger body-xs text-center m-3">{errors.file.message}</span>
+            )}
+        </div>
 
         <div className="flex flex-col bg-white rounded-[20px] p-8 w-[591px] gap-8">
           <h2 className="title-sm text-gray-300">Dados do produto</h2>        
@@ -86,8 +120,8 @@ export function NovoProduto() {
                 <option value="clothing">Vestuário</option>
               </select>
               <HugeiconsIcon icon={ArrowDown01Icon} size={24} className="text-gray-300 absolute right-2 top-6" />
-              {formState.errors.category && (
-              <span className="text-red-500 text-xs mt-1">{formState.errors.category.message || "Selecione uma categoria"}</span>
+              {errors.category && (
+              <span className="text-red-500 text-xs mt-1">{errors.category.message || "Selecione uma categoria"}</span>
             )}
             </label>
 

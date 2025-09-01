@@ -13,11 +13,11 @@ export function ProductFilter() {
           
           <div className="flex gap-2 mb-5 h-12 w-full items-center border-b-gray-200 border-b-2 relative">
             <HugeiconsIcon icon={SaleTag02Icon} size={24} className="text-gray-200"/>
-            <select name="status" id="status" className="body-md items-center w-full h-8 text-gray-200 appearance-none z-1" >
-              <option value="">Status</option>
-              <option value="announced">Anunciado</option>
-              <option value="sold">Vendido</option>
-              <option value="canceled">Cancelado</option>
+            <select name="status" id="status" className="body-md items-center w-full h-8 text-gray-200 appearance-none z-1">
+              <option value="" className="body-sm text-gray-300">Status</option>
+              <option value="announced" className="body-sm text-gray-300">Anunciado</option>
+              <option value="sold" className="body-sm text-gray-300">Vendido</option>
+              <option value="canceled" className="body-sm text-gray-300">Cancelado</option>
             </select>
               <HugeiconsIcon icon={ArrowDown01Icon} size={24} className="text-gray-300 absolute right-2 bottom-3" />
           </div>

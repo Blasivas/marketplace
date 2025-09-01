@@ -1,5 +1,6 @@
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ButtonAuth } from "../../components/ButtonAuth"
+import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import z from 'zod'
@@ -7,6 +8,7 @@ import { AccessIcon, Mail02Icon, ViewIcon, ViewOffIcon } from "@hugeicons/core-f
 import { toast } from "sonner"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from "react"
+import { login } from "../../api/Login"
 
 const LoginForm = z.object({
   email: z.email().nonempty(),
@@ -28,11 +30,18 @@ export function Login(){
     resolver: zodResolver(LoginForm)
   })
 
-  function handleLogin(data: LoginForm){
+   const { mutateAsync: authenticate } = useMutation({
+    mutationFn: login,
+  })
+
+  
+  async function handleLogin(data: LoginForm){
     try {
-      console.log(data)    
+      const token = await authenticate({ email: data.email, password: data.password })
+
       navigate('/app/dashboard')
     } catch (error) {
+      console.error(error)
       toast.error('E-mail ou senha inválidos')
     }
   }

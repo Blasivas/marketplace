@@ -1,41 +1,31 @@
 import { Calendar04Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
-
-const data = [
-  { date: '01', views: 808 },
-  { date: '02', views: 103 },
-  { date: '03', views: 315 },
-  { date: '04', views: 344 },
-  { date: '05', views: 887 },
-  { date: '06', views: 719 },
-  { date: '07', views: 970 },
-  { date: '08', views: 913 },
-  { date: '09', views: 386 },
-  { date: '10', views: 422 },
-  { date: '11', views: 372 },
-  { date: '12', views: 596 },
-  { date: '13', views: 683 },
-  { date: '14', views: 374 },
-  { date: '15', views: 113 },
-  { date: '16', views: 689 },
-  { date: '17', views: 980 },
-  { date: '18', views: 760 },
-  { date: '19', views: 414 },
-  { date: '20', views: 952 },
-  { date: '21', views: 464 },
-  { date: '22', views: 210 },
-  { date: '23', views: 486 },
-  { date: '24', views: 108 },
-  { date: '25', views: 676 },
-  { date: '26', views: 564 },
-  { date: '27', views: 341 },
-  { date: '28', views: 644 },
-  { date: '29', views: 340 },
-  { date: '30', views: 944 },
-]
+import { getViewsPerDay } from "../api/GetViewsPerDay";
+import { useQuery } from "@tanstack/react-query";
 
 export function Chart() {
+
+  const {data: result = {}} = useQuery({
+    queryKey: ['views-per-day'],
+    queryFn: getViewsPerDay,
+  })
+
+  const data = result.viewsPerDay
+  console.log(data)
+  
+  const transformedData = (data) => {
+    return data?.map(item =>{
+      const day = new Date(item.date).getUTCDate().toString().padStart(2, '0')
+      return {
+        date: day,
+        views: item.amount
+      }
+    })
+  }
+
+  console.log(transformedData(data))
+
   return(
     <div className="flex flex-col bg-white rounded-xl p-6 w-full gap-7">
       <div className="flex justify-between items-center">
@@ -46,7 +36,7 @@ export function Chart() {
         </div>
       </div>
       <ResponsiveContainer width='100%' >
-        <LineChart data={data}>
+        <LineChart data={transformedData(data)}>
           <CartesianGrid stroke="#EAEAEA" vertical={false} strokeDasharray="10 10" />
           <XAxis dataKey="date" axisLine={false} tickLine={false} stroke="#949494" height={15}/>
           <YAxis dataKey="views" axisLine={false} tickLine={false} stroke="#949494" width={40}/>
