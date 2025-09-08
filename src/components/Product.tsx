@@ -1,10 +1,10 @@
 import ProductImage from '../../assets/New folder/Rectangle4835.png'
 
-enum ProductStatus {
-  sold = 'Vendido',
-  cancelled = 'Cancelado',
-  available = 'Disponível',
-}
+const ProductStatus = {
+  sold: 'Vendido',
+  cancelled: 'Cancelado',
+  available: 'Disponível',
+} as const;
 
 type ProductProps = {
   title: string

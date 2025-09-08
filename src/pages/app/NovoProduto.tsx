@@ -16,12 +16,16 @@ const NovoProdutoForm = z.object({
   value: z.number().min(0, "O valor deve ser maior que zero"),
   description: z.string().nonempty('Descrição obrigatória'),
   category: z.enum([
-    'toy',
-    'furniture',
-    'stationery',
-    'health_beauty',
-    'utensil',
-    'clothing'
+    'informatica',
+    'moveis',
+    'livros',
+    'esportes',
+    'brinquedos',
+    'alimentos',
+    'moda',
+    'eletronicos',
+    'eletrodomesticos',
+    'decoracao',
   ]),
   file: z
   .custom<FileList>()
@@ -112,12 +116,16 @@ export function NovoProduto() {
               {...register('category')} required
               className="flex body-md text-gray-200 items-center h-5 appearance-none z-1 my-3.5" >
                 <option value="">Selecione</option>
-                <option value="toy">Brinquedo</option>
-                <option value="furniture">Móvel</option>
-                <option value="stationery">Papelaria</option>
-                <option value="health_beauty">Saúde & Beleza</option>
-                <option value="utensil">Utensílio</option>
-                <option value="clothing">Vestuário</option>
+                <option value="brinquedos">Brinquedos</option>
+                <option value="moveis">Móveis</option>
+                <option value="informatica">Informática</option>
+                <option value="livros">Livros</option>
+                <option value="esportes">Esportes</option>
+                <option value="alimentos">Alimentos</option>
+                <option value="moda">Moda</option>
+                <option value="eletronicos">Eletrônicos</option>
+                <option value="eletrodomesticos">Eletrodomésticos</option>
+                <option value="decoracao">Decoração</option>
               </select>
               <HugeiconsIcon icon={ArrowDown01Icon} size={24} className="text-gray-300 absolute right-2 top-6" />
               {errors.category && (

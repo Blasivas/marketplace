@@ -12,7 +12,6 @@ export function Chart() {
   })
 
   const data = result.viewsPerDay
-  console.log(data)
   
   const transformedData = (data) => {
     return data?.map(item =>{
@@ -23,8 +22,6 @@ export function Chart() {
       }
     })
   }
-
-  console.log(transformedData(data))
 
   return(
     <div className="flex flex-col bg-white rounded-xl p-6 w-full gap-7">

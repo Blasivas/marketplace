@@ -13,8 +13,6 @@ export function Produtos() {
   })
 
   const data = result.products
-  console.log(data)
-
   
 
   return (
@@ -31,7 +29,7 @@ export function Produtos() {
         <div className="flex flex-wrap justify-center gap-4 pr-0.5 overflow-x-hidden overflow-y-auto max-h-[70vh] w-fit [&::-webkit-scrollbar-thumb]:bg-orange-base">
           {data?.map(item => {
             return (
-            <Link to={'/app/editar-produto'} key={item.id}>
+            <Link to={`/app/editar-produto?id=${item.id}`} key={item.id}>
               <Product
                 title={item.title}
                 description={item.description}
