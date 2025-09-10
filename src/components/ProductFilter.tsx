@@ -1,21 +1,66 @@
 import { ArrowDown01Icon, SaleTag02Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ButtonApp } from "./ButtonApp";
+import z from "zod";
+import { useSearchParams } from "react-router";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
+const orderFiltersSchema = z.object({
+  title: z.string().optional(),
+  status: z.string().optional(),
+})
+
+type OrderFiltersSchema = z.infer<typeof orderFiltersSchema>
+
+
+  
 export function ProductFilter() {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const title = searchParams.get('title')
+  const status = searchParams.get('status')
+
+  const { register, handleSubmit } = useForm<OrderFiltersSchema>({
+    resolver: zodResolver(orderFiltersSchema),
+    defaultValues: {
+      title: title ?? '',
+      status: status ?? '',
+    },
+  })
+
+    function handleFilter({ title, status }: OrderFiltersSchema) {
+    setSearchParams((state) => {
+      if (title) {
+        state.set('title', title)
+      } else {
+        state.delete('title')
+      }
+
+      if (status) {
+        state.set('status', status)
+      } else {
+        state.delete('status')
+      }
+
+      return state
+    })
+  }
+
   return (
-    <form className="flex flex-col p-6 gap-5 bg-white rounded-xl max-h-75 w-80 items-start">
+    <form onSubmit={handleSubmit(handleFilter)} className="flex flex-col p-6 gap-5 bg-white rounded-xl max-h-75 w-80 items-start">
           <b className="title-sm text-gray-300 mb-1">Filtrar</b>
+
           <div className="flex gap-2 h-12 w-full items-center border-b-gray-200 border-b-2">
             <HugeiconsIcon icon={Search01Icon} size={24} className="text-gray-200"/>
-            <input type="search" placeholder="Pesquisar" className="body-md w-full h-8 text-gray-200 placeholder:text-gray-200 appearance-none"/>
+            <input id="title" type="search" placeholder="Pesquisar"  {...register('title')} className="body-md w-full h-8 text-gray-200 placeholder:text-gray-200 appearance-none"/>
           </div>
           
           <div className="flex gap-2 mb-5 h-12 w-full items-center border-b-gray-200 border-b-2 relative">
             <HugeiconsIcon icon={SaleTag02Icon} size={24} className="text-gray-200"/>
-            <select name="status" id="status" className="body-md items-center w-full h-8 text-gray-200 appearance-none z-1">
+            <select id="status"  {...register('status')} className="body-md items-center w-full h-8 text-gray-200 appearance-none z-1">
               <option value="" className="body-sm text-gray-300">Status</option>
-              <option value="announced" className="body-sm text-gray-300">Anunciado</option>
+              <option value="available" className="body-sm text-gray-300">Disponível</option>
               <option value="sold" className="body-sm text-gray-300">Vendido</option>
               <option value="canceled" className="body-sm text-gray-300">Cancelado</option>
             </select>

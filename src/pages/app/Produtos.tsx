@@ -1,5 +1,5 @@
 import { Product } from "../../components/Product";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { ProductFilter } from "../../components/ProductFilter";
 import { getProducts } from "../../api/GetProducts";
 import { useQuery } from "@tanstack/react-query";
@@ -7,13 +7,18 @@ import { useQuery } from "@tanstack/react-query";
 
 export function Produtos() {
 
+  
+  const [searchParams] = useSearchParams()
+  
+  const title = searchParams.get('title')
+  const status = searchParams.get('status')
+  
   const {data: result = {}} = useQuery({
-    queryKey: ['products'],
-    queryFn: getProducts,
+    queryKey: ['products', title, status],
+    queryFn: () => getProducts({ title, status }),
   })
 
   const data = result.products
-  
 
   return (
     <>

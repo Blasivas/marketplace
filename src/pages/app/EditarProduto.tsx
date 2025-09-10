@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router";
 import { editProduct, type EditProductBody } from "../../api/EditProduct";
+import { ButtonSold } from "../../components/ButtonSold";
+import { ButtonCancelled } from "../../components/ButtonCancelled";
 
 const ProductStatus = {
   sold: 'VENDIDO',
@@ -99,12 +101,8 @@ export function EditarProduto() {
         <div className="flex justify-between w-full">
           <p className="body-sm text-gray-300">Gerencie as informações do produto cadastrado</p>
           <div className="flex gap-4">
-            <button className="flex items-center gap-2 text-orange-base action-sm cursor-pointer">
-              <HugeiconsIcon icon={Tick02Icon} size={20} className=""/>Marcar como vendido
-            </button>
-            <button className="flex items-center gap-2 text-orange-base action-sm cursor-pointer">
-              <HugeiconsIcon icon={UnavailableIcon} size={20} className=""/>Desativar anúncio
-            </button>
+            <ButtonSold />
+            <ButtonCancelled />
           </div>
         </div>
       </div>

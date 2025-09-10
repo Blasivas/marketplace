@@ -1,14 +1,39 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import icone from '../../../assets/Icone.svg'
 import user from '../../../assets/User.png'
 import { ChartHistogramIcon, PackageIcon, PlusSignIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link, useLocation } from "react-router";
+import { useEffect } from "react";
+import { api } from "../../lib/axios";
+import { isAxiosError } from "axios";
 
 
 export function AppLayout() {
 
   const { pathname } = useLocation()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const interceptorId = api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (isAxiosError(error)) {
+          const status = error.response?.status
+          const code = error.response?.data.code
+
+          if (status === 401 ) {
+            navigate('/sign-in', { replace: true })
+          }
+        }
+      },
+    )
+
+    return () => {
+      api.interceptors.response.eject(interceptorId)
+    }
+  }, [navigate])
 
   return(
     <>
