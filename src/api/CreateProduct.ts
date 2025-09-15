@@ -8,6 +8,18 @@ export interface CreateProductBody {
   attachmentsIds: string[]
 }
 
-export async function createProduct({ title, categoryId, description, priceInCents, attachmentsIds }: CreateProductBody) {
-  await api.post('/products', { title, categoryId, description, priceInCents, attachmentsIds })
+export async function createProduct({
+  title,
+  categoryId,
+  description,
+  priceInCents,
+  attachmentsIds,
+}: CreateProductBody) {
+  await api.post('/products', {
+    title,
+    categoryId,
+    description,
+    priceInCents,
+    attachmentsIds,
+  })
 }

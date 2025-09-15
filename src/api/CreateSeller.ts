@@ -9,6 +9,20 @@ export interface CreateSellerBody {
   passwordConfirmation: string
 }
 
-export async function createSeller({ email, password, name, phone, avatarId, passwordConfirmation }: CreateSellerBody) {
-  await api.post('/sellers', { email, password, name, phone, avatarId, passwordConfirmation })
+export async function createSeller({
+  email,
+  password,
+  name,
+  phone,
+  avatarId,
+  passwordConfirmation,
+}: CreateSellerBody) {
+  await api.post('/sellers', {
+    email,
+    password,
+    name,
+    phone,
+    avatarId,
+    passwordConfirmation,
+  })
 }

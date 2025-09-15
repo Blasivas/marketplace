@@ -1,10 +1,14 @@
-import { ArrowDown01Icon, SaleTag02Icon, Search01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { ButtonApp } from "./ButtonApp";
-import z from "zod";
-import { useSearchParams } from "react-router";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  ArrowDown01Icon,
+  SaleTag02Icon,
+  Search01Icon,
+} from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { ButtonApp } from './ButtonApp'
+import z from 'zod'
+import { useSearchParams } from 'react-router'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const orderFiltersSchema = z.object({
   title: z.string().optional(),
@@ -13,8 +17,6 @@ const orderFiltersSchema = z.object({
 
 type OrderFiltersSchema = z.infer<typeof orderFiltersSchema>
 
-
-  
 export function ProductFilter() {
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -29,7 +31,7 @@ export function ProductFilter() {
     },
   })
 
-    function handleFilter({ title, status }: OrderFiltersSchema) {
+  function handleFilter({ title, status }: OrderFiltersSchema) {
     setSearchParams((state) => {
       if (title) {
         state.set('title', title)
@@ -48,26 +50,59 @@ export function ProductFilter() {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleFilter)} className="flex flex-col p-6 gap-5 bg-white rounded-xl max-h-75 w-80 items-start">
-          <b className="title-sm text-gray-300 mb-1">Filtrar</b>
+    <form
+      onSubmit={handleSubmit(handleFilter)}
+      className="flex flex-col p-6 gap-5 bg-white rounded-xl max-h-75 w-80 items-start"
+    >
+      <b className="title-sm text-gray-300 mb-1">Filtrar</b>
 
-          <div className="flex gap-2 h-12 w-full items-center border-b-gray-200 border-b-2">
-            <HugeiconsIcon icon={Search01Icon} size={24} className="text-gray-200"/>
-            <input id="title" type="search" placeholder="Pesquisar"  {...register('title')} className="body-md w-full h-8 text-gray-200 placeholder:text-gray-200 appearance-none"/>
-          </div>
-          
-          <div className="flex gap-2 mb-5 h-12 w-full items-center border-b-gray-200 border-b-2 relative">
-            <HugeiconsIcon icon={SaleTag02Icon} size={24} className="text-gray-200"/>
-            <select id="status"  {...register('status')} className="body-md items-center w-full h-8 text-gray-200 appearance-none z-1">
-              <option value="" className="body-sm text-gray-300">Status</option>
-              <option value="available" className="body-sm text-gray-300">Disponível</option>
-              <option value="sold" className="body-sm text-gray-300">Vendido</option>
-              <option value="canceled" className="body-sm text-gray-300">Cancelado</option>
-            </select>
-              <HugeiconsIcon icon={ArrowDown01Icon} size={24} className="text-gray-300 absolute right-2 bottom-3" />
-          </div>
-          
-          <ButtonApp variant="orange">Aplicar filtro</ButtonApp>
-        </form>
+      <div className="flex gap-2 h-12 w-full items-center border-b-gray-200 border-b-2">
+        <HugeiconsIcon
+          icon={Search01Icon}
+          size={24}
+          className="text-gray-200"
+        />
+        <input
+          id="title"
+          type="search"
+          placeholder="Pesquisar"
+          {...register('title')}
+          className="body-md w-full h-8 text-gray-200 placeholder:text-gray-200 appearance-none"
+        />
+      </div>
+
+      <div className="flex gap-2 mb-5 h-12 w-full items-center border-b-gray-200 border-b-2 relative">
+        <HugeiconsIcon
+          icon={SaleTag02Icon}
+          size={24}
+          className="text-gray-200"
+        />
+        <select
+          id="status"
+          {...register('status')}
+          className="body-md items-center w-full h-8 text-gray-200 appearance-none z-1"
+        >
+          <option value="" className="body-sm text-gray-300">
+            Status
+          </option>
+          <option value="available" className="body-sm text-gray-300">
+            Disponível
+          </option>
+          <option value="sold" className="body-sm text-gray-300">
+            Vendido
+          </option>
+          <option value="canceled" className="body-sm text-gray-300">
+            Cancelado
+          </option>
+        </select>
+        <HugeiconsIcon
+          icon={ArrowDown01Icon}
+          size={24}
+          className="text-gray-300 absolute right-2 bottom-3"
+        />
+      </div>
+
+      <ButtonApp variant="orange">Aplicar filtro</ButtonApp>
+    </form>
   )
 }

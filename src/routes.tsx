@@ -9,61 +9,58 @@ import { NovoProduto } from './pages/app/NovoProduto'
 import { NotFound } from './pages/NotFound'
 import { EditarProduto } from './pages/app/EditarProduto'
 
-
 export const router = createBrowserRouter([
   {
     path: '/',
     errorElement: <NotFound />,
-    children:[
+    children: [
       {
         index: true,
-        element: <Navigate to="/sign-in" replace />
-      }
-    ]
+        element: <Navigate to="/sign-in" replace />,
+      },
+    ],
   },
   {
     path: '/sign-in',
     element: <AuthLayout />,
-    children:[
+    children: [
       {
         path: '/sign-in',
-        element: <Login />
-      }
-    ]
+        element: <Login />,
+      },
+    ],
   },
   {
     path: '/sign-up',
     element: <AuthLayout />,
-    children:[
+    children: [
       {
         path: '/sign-up',
-        element: <Cadastro />
-      }
-    ]
+        element: <Cadastro />,
+      },
+    ],
   },
 
   {
     path: '/app',
     element: <AppLayout />,
-    children:[
+    children: [
       {
         path: '/app/dashboard',
-        element: <Dashboard />
+        element: <Dashboard />,
       },
       {
         path: '/app/produtos',
-        element: <Produtos />
+        element: <Produtos />,
       },
       {
         path: '/app/novo-produto',
-        element: <NovoProduto />
+        element: <NovoProduto />,
       },
       {
         path: '/app/editar-produto',
-        element: <EditarProduto />
+        element: <EditarProduto />,
       },
-    ]
+    ],
   },
-  
 ])
-

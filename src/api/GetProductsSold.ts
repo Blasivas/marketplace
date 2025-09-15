@@ -5,6 +5,8 @@ interface GetProductsSoldResponse {
 }
 
 export async function getProductsSold() {
-  const response = await api.get<GetProductsSoldResponse>('/sellers/metrics/products/sold')
+  const response = await api.get<GetProductsSoldResponse>(
+    '/sellers/metrics/products/sold',
+  )
   return response.data
 }

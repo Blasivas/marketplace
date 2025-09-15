@@ -8,6 +8,21 @@ export interface EditProductBody {
   attachmentsIds: string[]
 }
 
-export async function editProduct(id: string, { title, categoryId, description, priceInCents, attachmentsIds }: EditProductBody) {
-  await api.put(`/products/${id}`, { title, categoryId, description, priceInCents, attachmentsIds })
+export async function editProduct(
+  id: string,
+  {
+    title,
+    categoryId,
+    description,
+    priceInCents,
+    attachmentsIds,
+  }: EditProductBody,
+) {
+  await api.put(`/products/${id}`, {
+    title,
+    categoryId,
+    description,
+    priceInCents,
+    attachmentsIds,
+  })
 }

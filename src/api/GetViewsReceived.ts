@@ -5,6 +5,8 @@ interface GetViewsReceivedResponse {
 }
 
 export async function getViewsReceived() {
-  const response = await api.get<GetViewsReceivedResponse>('/sellers/metrics/views')
+  const response = await api.get<GetViewsReceivedResponse>(
+    '/sellers/metrics/views',
+  )
   return response.data
 }
